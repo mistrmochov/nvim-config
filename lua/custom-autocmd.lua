@@ -165,7 +165,7 @@ api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, 
 api.nvim_create_autocmd("ColorScheme", {
   group = api.nvim_create_augroup("custom_highlight", { clear = true }),
   pattern = "*",
-  desc = "Define or override some highlight groups",
+  desc = "Define or overrride some highlight groups",
   callback = function()
     -- For yank highlight
     vim.api.nvim_set_hl(
@@ -202,7 +202,7 @@ api.nvim_create_autocmd("BufEnter", {
   desc = "Quit Nvim if we have only one window, and its filetype match our pattern",
   ---@diagnostic disable-next-line: unused-local
   callback = function(context)
-    local quit_filetypes = { "qf", "NvimTree" }
+    local quit_filetypes = { "qf", "vista", "NvimTree" }
 
     local should_quit = true
     local tabwins = api.nvim_tabpage_list_wins(0)
@@ -289,20 +289,6 @@ api.nvim_create_autocmd("BufWritePost", {
     local result = vim.system(cmd, { text = true }):wait()
     if result.code ~= 0 then
       vim.notify("This file is not formatted!")
-    end
-  end,
-})
-
-api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
-  group = api.nvim_create_augroup("auto_save", { clear = true }),
-  pattern = { "*" },
-  desc = "Auto save current file",
-  callback = function(ev)
-    local is_readonly = vim.api.nvim_get_option_value("readonly", { buf = ev.buf })
-    local is_modifiable = vim.api.nvim_get_option_value("modifiable", { buf = ev.buf })
-
-    if not is_readonly and is_modifiable then
-      vim.cmd([[silent! update]])
     end
   end,
 })
