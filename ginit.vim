@@ -71,4 +71,11 @@ if exists("g:neovide")
   let g:neovide_cursor_vfx_mode = ""
   let g:neovide_cursor_vfx_particle_density=10.0
   let g:neovide_cursor_vfx_opacity=150.0
+
+  se mouse+=a
+
+  noremap <C-C> "+y
+  noremap <C-V> "+p
+  cnoremap <C-V> <C-r>+
+  imap <C-V> <C-r>+
 endif
