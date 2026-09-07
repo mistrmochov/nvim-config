@@ -1,0 +1,204 @@
+snippet main "fn main" b
+fn main() {
+	$1
+}
+endsnippet
+
+snippet mainr "fn main returning Result" b
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+	$1
+	Ok(())
+}
+endsnippet
+
+snippet fn "function" b
+fn $1($2)${3: -> $4} {
+	$5
+}
+endsnippet
+
+snippet pfn "public function" b
+pub fn $1($2)${3: -> $4} {
+	$5
+}
+endsnippet
+
+snippet afn "async function" b
+async fn $1($2)${3: -> $4} {
+	$5
+}
+endsnippet
+
+snippet st "struct" b
+${1:pub }struct ${2:Name} {
+	$3
+}
+endsnippet
+
+snippet en "enum" b
+${1:pub }enum ${2:Name} {
+	$3
+}
+endsnippet
+
+snippet imp "impl block" b
+impl ${1:Type} {
+	$2
+}
+endsnippet
+
+snippet impt "impl trait for type" b
+impl ${1:Trait} for ${2:Type} {
+	$3
+}
+endsnippet
+
+snippet tr "trait" b
+${1:pub }trait ${2:Name} {
+	$3
+}
+endsnippet
+
+snippet der "derive attribute" b
+#[derive(${1:Debug, Clone})]
+endsnippet
+
+snippet mod "module" b
+mod ${1:name} {
+	$2
+}
+endsnippet
+
+snippet match "match expression" b
+match ${1:expr} {
+	${2:pattern} => $3,
+	_ => $4,
+}
+endsnippet
+
+snippet iflet "if let" b
+if let ${1:Some(x)} = ${2:expr} {
+	$3
+}
+endsnippet
+
+snippet whlet "while let" b
+while let ${1:Some(x)} = ${2:expr} {
+	$3
+}
+endsnippet
+
+snippet for "for loop" b
+for ${1:item} in ${2:iter} {
+	$3
+}
+endsnippet
+
+snippet let "let binding" b
+let ${1:name}${2:: $3} = $4;
+endsnippet
+
+snippet letm "mutable let binding" b
+let mut ${1:name}${2:: $3} = $4;
+endsnippet
+
+snippet pl "println!"
+println!("$1"${2:, $3});
+endsnippet
+
+snippet ep "eprintln!"
+eprintln!("$1"${2:, $3});
+endsnippet
+
+snippet dbg "dbg! macro"
+dbg!($1);
+endsnippet
+
+snippet fmt "format!"
+format!("$1"${2:, $3})
+endsnippet
+
+snippet todo "todo! macro"
+todo!(${1:"$2"});
+endsnippet
+
+snippet unim "unimplemented! macro"
+unimplemented!(${1:"$2"});
+endsnippet
+
+snippet test "unit test" b
+#[test]
+fn ${1:name}() {
+	$2
+}
+endsnippet
+
+snippet testmod "test module" b
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn ${1:name}() {
+		$2
+	}
+}
+endsnippet
+
+snippet atest "async test (tokio)" b
+#[tokio::test]
+async fn ${1:name}() {
+	$2
+}
+endsnippet
+
+snippet asr "assert!"
+assert!($1${2:, "$3"});
+endsnippet
+
+snippet asre "assert_eq!"
+assert_eq!($1, $2);
+endsnippet
+
+snippet res "Result type"
+Result<${1:T}, ${2:E}>
+endsnippet
+
+snippet opt "Option type"
+Option<${1:T}>
+endsnippet
+
+snippet box "Box<dyn Error>"
+Box<dyn std::error::Error>
+endsnippet
+
+snippet arc "Arc<Mutex<T>>"
+Arc<Mutex<${1:T}>>
+endsnippet
+
+snippet clo "closure"
+|${1:x}| ${2:expr}
+endsnippet
+
+snippet ite "impl Iterator"
+impl Iterator<Item = ${1:T}>
+endsnippet
+
+snippet doc "doc comment" b
+/// $1
+endsnippet
+
+snippet allow "allow attribute" b
+#[allow(${1:dead_code})]
+endsnippet
+
+snippet cfgt "cfg(test) attribute" b
+#[cfg(test)]
+endsnippet
+
+snippet unsafe "unsafe block" b
+// SAFETY: $1
+unsafe {
+	$2
+}
+endsnippet
