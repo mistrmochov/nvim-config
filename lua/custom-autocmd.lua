@@ -292,3 +292,20 @@ api.nvim_create_autocmd("BufWritePost", {
     end
   end,
 })
+
+api.nvim_create_autocmd("BufEnter", {
+  group = api.nvim_create_augroup("wipe_stale_buffers", { clear = true }),
+  desc = "Wipe unlisted, unloaded file buffers",
+  callback = function()
+    for _, buf in ipairs(api.nvim_list_bufs()) do
+      if
+        not vim.bo[buf].buflisted
+        and not api.nvim_buf_is_loaded(buf)
+        and vim.bo[buf].buftype == ""
+        and api.nvim_buf_get_name(buf) ~= ""
+      then
+        pcall(vim.cmd, "bwipeout! " .. buf)
+      end
+    end
+  end,
+})
