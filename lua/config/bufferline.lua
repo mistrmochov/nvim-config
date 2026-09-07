@@ -2,7 +2,7 @@ local symbol_icon = require("symbol_icon")
 
 require("bufferline").setup {
   options = {
-    numbers = "none",
+    numbers = "ordinal",
     close_command = "bdelete! %d",
     right_mouse_command = nil,
     left_mouse_command = "buffer %d",
@@ -43,10 +43,19 @@ require("bufferline").setup {
     separator_style = "bar",
     enforce_regular_tabs = false,
     always_show_bufferline = true,
-    sort_by = "id",
+    sort_by = "insert_at_end",
   },
 }
 
 vim.keymap.set("n", "<space>bp", "<cmd>BufferLinePick<CR>", {
   desc = "pick a buffer",
 })
+
+vim.keymap.set("n", "<space>b.", "<cmd>BufferLineMoveNext<CR>", { desc = "move buffer right" })
+vim.keymap.set("n", "<space>b,", "<cmd>BufferLineMovePrev<CR>", { desc = "move buffer left" })
+
+for i = 1, 9 do
+  vim.keymap.set("n", "<space>b" .. i, function()
+    require("bufferline").go_to(i, true)
+  end, { desc = "go to buffer " .. i })
+end

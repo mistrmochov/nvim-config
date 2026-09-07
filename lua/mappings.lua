@@ -30,7 +30,7 @@ keymap.set("n", [[\x]], "<cmd>windo lclose <bar> cclose <cr>", {
 })
 
 -- Delete a buffer, without closing the window, see https://stackoverflow.com/q/4465095/6064933
-keymap.set("n", [[\db]], "<cmd>bprevious <bar> bdelete #<cr>", {
+keymap.set("n", [[\db]], "<cmd>bprevious <bar> bwipeout! #<cr>", {
   silent = true,
   desc = "Delete current buffer",
 })
