@@ -49,6 +49,16 @@ end, {
   desc = "Delete other buffers",
 })
 
+keymap.set("n", [[\tn]], "<cmd>tabnew<cr>", {
+  silent = true,
+  desc = "New tab",
+})
+
+keymap.set("n", [[\to]], "<cmd>tabnew %<cr>", {
+  silent = true,
+  desc = "New tab with current file",
+})
+
 keymap.set("n", [[\dt]], "<cmd>tabclose<CR>", {
   silent = true,
   desc = "Delete current tab",
