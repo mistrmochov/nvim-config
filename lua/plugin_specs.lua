@@ -611,6 +611,35 @@ local plugin_specs = {
   },
   { "cespare/vim-toml", ft = { "toml" }, branch = "main" },
 
+  -- Rust: rustaceanvim owns the rust-analyzer client, so rust_analyzer must not
+  -- be listed in `enabled_lsp_servers` in lua/lsp_conf.lua.
+  {
+    "mrcjkb/rustaceanvim",
+    -- pin the major version, the plugin does break things between them
+    version = "^9",
+    -- it implements proper lazy-loading itself, lazy.nvim must not defer it
+    lazy = false,
+    -- there is no setup() to call, the options are read from `vim.g.rustaceanvim`
+    -- and that has to be set before the first rust buffer opens
+    init = function()
+      require("config.rustaceanvim")
+    end,
+  },
+
+  -- Cargo.toml dependency management (versions, features, upgrades)
+  {
+    "saecki/crates.nvim",
+    tag = "stable",
+    event = { "BufRead Cargo.toml" },
+    config = function()
+      require("config.crates")
+    end,
+  },
+
+  -- debug adapter client, used by `:RustLsp debuggables`. Loaded on demand,
+  -- needs `codelldb` or `lldb-dap` on $PATH to actually attach.
+  { "mfussenegger/nvim-dap", lazy = true },
+
   -- Edit text area in browser using nvim
   {
     "glacambre/firenvim",

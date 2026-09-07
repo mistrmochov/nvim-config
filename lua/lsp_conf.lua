@@ -60,17 +60,30 @@ vim.api.nvim_create_autocmd("LspAttach", {
       }
     end, { desc = "go to definition" })
     map("n", "<C-]>", vim.lsp.buf.definition)
-    map("n", "K", function()
-      vim.lsp.buf.hover {
-        border = "single",
-        max_height = 40,
-        max_width = 100,
-        close_events = { "CursorMoved", "BufLeave", "WinLeave", "LSPDetach" },
-      }
-    end)
+
+    -- rustaceanvim provides richer, rust-analyzer-specific versions of `K`
+    -- (hover actions) and `<space>ca` (grouped code actions). It sets them in
+    -- after/ftplugin/rust.lua, which runs before this autocmd, so skip them
+    -- here instead of clobbering them.
+    local is_rust_analyzer = client.name == "rust-analyzer"
+
+    if not is_rust_analyzer then
+      map("n", "K", function()
+        vim.lsp.buf.hover {
+          border = "single",
+          max_height = 40,
+          max_width = 100,
+          close_events = { "CursorMoved", "BufLeave", "WinLeave", "LSPDetach" },
+        }
+      end)
+    end
+
     map("n", "<C-k>", vim.lsp.buf.signature_help)
     map("n", "<space>rn", vim.lsp.buf.rename, { desc = "variable rename" })
-    map("n", "<space>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
+
+    if not is_rust_analyzer then
+      map("n", "<space>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
+    end
     map("n", "<space>wa", vim.lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
     map("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
     map("n", "<space>wl", function()
@@ -120,6 +133,10 @@ local enabled_lsp_servers = {
   pyrefly = { exe = "pyrefly", optional = true },
   ty = { exe = "ty", optional = true },
   ruff = { exe = "ruff", optional = true },
+
+  -- NOTE: rust_analyzer is deliberately NOT listed here. rustaceanvim starts and
+  -- owns that client itself (see lua/config/rustaceanvim.lua). Enabling it here
+  -- as well would attach two clients to every rust buffer.
 
   vimls = { exe = "vim-language-server", optional = true },
   yamlls = { exe = "yaml-language-server", optional = true },
