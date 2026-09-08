@@ -830,6 +830,23 @@ local plugin_specs = {
       require("config.colorful_menu")
     end,
   },
+
+  {
+    "sphamba/smear-cursor.nvim",
+    event = "VeryLazy",
+    -- Neovide animates its own cursor (see ginit.vim), and firenvim lives in a
+    -- browser textarea. Terminal only.
+    cond = function()
+      return not vim.g.neovide and firenvim_not_active()
+    end,
+    config = function()
+      require("smear_cursor").setup {
+        smear_between_buffers = true,
+        smear_between_neighbor_lines = true,
+        scroll_buffer_space = true,
+      }
+    end,
+  },
 }
 
 if completion_engine == "nvim-cmp" then
