@@ -837,7 +837,8 @@ local plugin_specs = {
     -- Neovide animates its own cursor (see ginit.vim), and firenvim lives in a
     -- browser textarea. Terminal only.
     cond = function()
-      return not vim.g.neovide and firenvim_not_active()
+      --return not vim.g.neovide and firenvim_not_active()
+      return
     end,
     config = function()
       require("smear_cursor").setup {
